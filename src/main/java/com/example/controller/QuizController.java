@@ -29,6 +29,7 @@ public class QuizController {
     ArrayList<Quiz> quizzes;
     ArrayList<Answer> answers;
     ArrayList<Player> playerList = new ArrayList<>();
+    ArrayList<Player> tempHighscore = new ArrayList<>();
     int currentCorrectAnswer = 1;
     int playersAnswered = 0;
     int i1 = 0;
@@ -52,28 +53,31 @@ public class QuizController {
         quizzes = (ArrayList<Quiz>) repository.getQuizes();
         answers = (ArrayList<Answer>) repository.getAnswers();
     }
-/*    @GetMapping("")
-    public ModelAndView startPage(){
-        return new ModelAndView("quiz/index");
-    }*/
+
     @GetMapping("/2")
     public ModelAndView page2(){
         return new ModelAndView("quiz/index2");
     }
 
 
-/*
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public String messageSender(String message) throws Exception {
-        return (message.toString());
-    }
-*/
     @MessageMapping("/alias")
     @SendTo("/topic/aliases")
     public ArrayList<Player> addingAlias(String alias) {
         playerList.add(new Player(alias, 0));
         return playerList;
+    }
+
+    public void returnPlayerList() {
+        this.temp.convertAndSend("/topic/aliases", playerList);
+    }
+    public void highScore() {
+        tempHighscore.add(0, new Player("dummy", 0));
+        for (int i = 0; i<playerList.size(); i++) {
+            if (playerList.get(i).getScore() > tempHighscore.get(0).getScore() ) {
+                tempHighscore.clear();
+                tempHighscore.add(playerList.get(i));
+            }
+        }
     }
 
     public void nextQuestion() {
@@ -83,11 +87,14 @@ public class QuizController {
             this.temp.convertAndSend("/topic/quiz", quizChannel());
             playersAnswered = 0;
             i1++;
+            returnPlayerList();
 
     }
-    public void showResults(Content content) {
-        System.out.println("showResults");
-        this.temp.convertAndSend("/topic/results", content);
+    public void showResults() {
+        highScore();
+        String s = tempHighscore.get(0).getAlias() + " vann med " + tempHighscore.get(0).getScore();
+        System.out.println(s);
+        this.temp.convertAndSend("/topic/results", s);
     }
 
     @MessageMapping("/connect")
@@ -114,7 +121,10 @@ public class QuizController {
 
         return new Content(s);
     }
-    showResults(new Content(""));
+    highScore();
+    repository.setCurrentQuestion(0);
+    showResults();
+    playerList.clear();
     return new Content("");
     }
 
