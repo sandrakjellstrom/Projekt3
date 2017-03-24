@@ -87,7 +87,7 @@ function showResults(s) {
     $("#options").hide();
     $("#image").attr("src", "");
     $("#question").hide();
-    $("#highscore").html(s);
+    $("#highscore").prepend(s);
     setTimeout(disconnect, 10000);
 
 }

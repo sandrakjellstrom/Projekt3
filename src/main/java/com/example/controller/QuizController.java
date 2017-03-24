@@ -73,12 +73,15 @@ public class QuizController {
     public void highScore() {
         tempHighscore.add(0, new Player("dummy", 0));
         for (int i = 0; i<playerList.size(); i++) {
-            if (playerList.get(i).getScore() > tempHighscore.get(0).getScore() ) {
+            if (playerList.get(i).getScore() == tempHighscore.get(0).getScore() ) {
+                tempHighscore.add(playerList.get(i));
+            }
+            else if(playerList.get(i).getScore() > tempHighscore.get(0).getScore()) {
                 tempHighscore.clear();
                 tempHighscore.add(playerList.get(i));
             }
-        }
-    }
+        }}
+
 
     public void nextQuestion() {
 
@@ -92,7 +95,18 @@ public class QuizController {
     }
     public void showResults() {
         highScore();
-        String s = tempHighscore.get(0).getAlias() + " vann med " + tempHighscore.get(0).getScore() + " poäng!";
+        String s = "";
+            if(tempHighscore.size() > 1)
+                for (int i = 0; i<tempHighscore.size(); i++) {
+                s += tempHighscore.get(i).getAlias();
+                    if(i+1 < tempHighscore.size()) {
+                        s += " och ";
+                    }
+                }
+            else {
+                s = tempHighscore.get(0).getAlias();
+            }
+            s+= " vann med " + tempHighscore.get(0).getScore() + " poäng!";
         this.temp.convertAndSend("/topic/results", s);
     }
 
