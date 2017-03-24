@@ -1,5 +1,6 @@
 var stompClient = null;
 var alias = null;
+var aliasList = null;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -29,15 +30,16 @@ function connect() {
             showAnswer(JSON.parse(greeting.body).content);
         });
         stompClient.subscribe('/topic/quiz', function (data){
-            console.log("det här kördes");
             showQuestion(JSON.parse(data.body).content);
+
             });
         stompClient.subscribe('/topic/aliases', function (alias) {
-            var a = (alias.body.replace(/[\]"}[{"]/g, ''));
-            showAliasList(a);
+            aliastList = JSON.parse(alias.body);
+            showAliasList(aliastList);
         });
-        stompClient.subscribe('/topic/results', function() {
-            showResults();
+        stompClient.subscribe('/topic/results', function(s) {
+            var winner  = s.body;
+            showResults(winner);
             });
         sendNewAlias(alias);
         stompClient.send("/app/connect",{}, "connected");
@@ -69,6 +71,7 @@ function showAnswer(message) {
 }
 function showQuestion(data) {
     var obj = JSON.parse(data);
+
     $("#question").html(obj.question);
     $("th#options1").html(obj.text1);
     $("th#options2").html(obj.text2);
@@ -77,29 +80,35 @@ function showQuestion(data) {
     $("#image").attr("src", obj.img_URL);
     $("table#options th").css("background-color", "#ed84f1");
     $("table#options th").removeAttr('disabled');
+
+
 }
 
-function showResults() {
-    console.log("ShowResults");
+function showResults(s) {
     $("#results").show();
     $("#options").hide();
     $("#image").attr("src", "");
     $("#question").hide();
+    $("#highscore").html(s);
+
 }
 
 function markAnswer(elem){
-   /* $('table#options th').prop('onclick',null).off('click');*/
+
     $( "table#options th").css("background-color","#ed84f1");
     elem.css("background-color","deeppink");
+
     var sendVar = elem.attr("value");
     stompClient.send("/app/answer", {}, JSON.stringify({'optionSelected': sendVar, 'playerAlias': alias}));
 
-
 }
 
-function showAliasList(alias) {
-    $("#aliases").html("<div>" + alias + "</div>");
-}
+function showAliasList(aliasList) {
+    $("#aliases").html("");
+    for(var i = 0; i<aliasList.length; i++) {
+        console.log(aliasList[i].score);
+        $("#aliases").append("<div>" + aliasList[i].alias + " " + aliasList[i].score +  "</div>");
+}}
 function sendNewAlias(alias){
     stompClient.send("/app/alias", {}, alias);
 }
