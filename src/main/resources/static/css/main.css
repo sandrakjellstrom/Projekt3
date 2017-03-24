@@ -2,56 +2,94 @@
 html, body {
   margin: 0;
   font: 16px;
-  border-color: #F2836B;
+  border-color: white;
 }
 body {
-    background-color: ##f5f5f5;
+    background-color: aliceblue;
+    font-family: 'Source Sans Pro', sans-serif;
 }
+
 img{
   display: block;
   margin: 0 auto;
-  height: 400px;
+  height: 200px;
 }
 #login-content{
   text-align: center;
-  font-family: monospace;
+  font-family: 'Source Sans Pro', sans-serif;;
   font-size: xx-large;
+    color: pink;
 }
 #login-content input{
-  max-width: 100%;
+  text-align: center;
+
 }
 #question{
   text-align: center;
 }
 #main-content {
-    max-width: 940px;
-    padding: 2em 3em;
-    margin: 0 auto 20px;
-    background-color: #fff;
-    border: 5px dashed #F2836B;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+
 }
 #image{
   display: none;
 }
 table {
     width: 80%;
-    height: 400px;
+    height: 200px;
     margin: 0 auto;
 }
+
 th {
     text-align: center;
-    background-color: cornflowerblue;
-    border: 2px solid blue;
+    background-color: #ed84f1;
+    border-radius: 20px;
+    height: 80px;
+    width: 50%;
+}
+tr{
+    position: relative;
+}
+table, th ,td{
+    border-spacing: 30px;
 }
 header {
-  border-bottom: 10px solid #F2836B;
-  text-align: center;
-  height: 67px;
 }
 h1 {
     text-align: center;
-    color: crimson;
+    color: dimgrey;
+    font-size: xx-large;
+
 }
+
+#connect {
+    font-size: large;
+    color: dimgrey;
+}
+
+#text {
+    text-align: center;
+    color: darkgrey;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: large;
+
+}
+
+#alias {
+    text-align: center;
+    color: darkslategrey;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: large;
+}
+
+#login-content {
+    color:black;
+}
+
+#question {
+    color:darkslategrey;
+    font-size: large;
+
+
+
+}
+

@@ -75,7 +75,7 @@ function showQuestion(data) {
     $("th#options3").html(obj.text3);
     $("th#options4").html(obj.text4);
     $("#image").attr("src", obj.img_URL);
-    $("table#options th").css("background-color", "cornflowerblue");
+    $("table#options th").css("background-color", "#ed84f1");
     $("table#options th").removeAttr('disabled');
 }
 
@@ -89,8 +89,8 @@ function showResults() {
 
 function markAnswer(elem){
    /* $('table#options th').prop('onclick',null).off('click');*/
-    $( "table#options th").css("background-color","cornflowerblue");
-    elem.css("background-color","black");
+    $( "table#options th").css("background-color","#ed84f1");
+    elem.css("background-color","deeppink");
     var sendVar = elem.attr("value");
     stompClient.send("/app/answer", {}, JSON.stringify({'optionSelected': sendVar, 'playerAlias': alias}));
 
