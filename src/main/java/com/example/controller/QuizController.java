@@ -92,8 +92,7 @@ public class QuizController {
     }
     public void showResults() {
         highScore();
-        String s = tempHighscore.get(0).getAlias() + " vann med " + tempHighscore.get(0).getScore();
-        System.out.println(s);
+        String s = tempHighscore.get(0).getAlias() + " vann med " + tempHighscore.get(0).getScore() + " poäng!";
         this.temp.convertAndSend("/topic/results", s);
     }
 
@@ -101,7 +100,6 @@ public class QuizController {
     @SendTo("/topic/quiz")
     public Content quizChannel(){
         if(questions.size() != repository.getCurrentQuestion()) {
-        System.out.println("Currentquestion: " + repository.getCurrentQuestion());
         String s = "";
 
         s = "{\"question\":\""+questions.get(repository.getCurrentQuestion()).getText()+"\"";
@@ -139,7 +137,6 @@ public class QuizController {
             AnswerTemp answerTemp = objectMapper.readValue(message, AnswerTemp.class);
             System.out.println(answerTemp);
             if(answerTemp.getOptionSelected() == currentCorrectAnswer){
-                System.out.println(answerTemp.getPlayerAlias()+" has answered correctly");
                 for(int i=0; i<playerList.size();i++){
                     if(playerList.get(i).getAlias().equalsIgnoreCase(answerTemp.getPlayerAlias())){
                         playerList.get(i).setScore(playerList.get(i).getScore()+1);

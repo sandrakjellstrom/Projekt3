@@ -47,7 +47,6 @@ function connect() {
     });
 }
 
-
 function disconnect() {
     if (stompClient != null) {
         stompClient.disconnect();
@@ -81,7 +80,6 @@ function showQuestion(data) {
     $("table#options th").css("background-color", "#ed84f1");
     $("table#options th").removeAttr('disabled');
 
-
 }
 
 function showResults(s) {
@@ -90,6 +88,7 @@ function showResults(s) {
     $("#image").attr("src", "");
     $("#question").hide();
     $("#highscore").html(s);
+    setTimeout(disconnect, 10000);
 
 }
 
