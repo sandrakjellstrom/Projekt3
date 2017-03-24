@@ -63,7 +63,14 @@ h1 {
 
 #connect {
     font-size: large;
-    color: dimgrey;
+    color: #960c96;
+    border-radius: 5px;
+    background-color: rgba(240, 224, 235, 0.42);
+}
+#highscore{
+    text-align: center;
+    font-size: xx-large;
+    color: indigo;
 }
 
 #text {
@@ -79,6 +86,9 @@ h1 {
     color: darkslategrey;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: large;
+    border-radius: 5px;
+    border-color: #f5abef;
+
 }
 
 #login-content {
@@ -89,7 +99,14 @@ h1 {
     color:darkslategrey;
     font-size: large;
 
-
-
+}
+#aliases {
+    width: 20%;
+    margin: 20px auto;
+    text-align: center;
+    color: #ff1934;
 }
 
+#results {
+    display:none;
+}
