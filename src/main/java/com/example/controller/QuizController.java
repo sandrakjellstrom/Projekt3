@@ -54,7 +54,7 @@ public class QuizController {
         answers = (ArrayList<Answer>) repository.getAnswers();
     }
 
-    @GetMapping("/2")
+    @GetMapping("")
     public ModelAndView page2(){
         return new ModelAndView("quiz/index2");
     }
